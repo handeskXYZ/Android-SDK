@@ -5,25 +5,38 @@ Android SDK - VOIP24H
 
 ### Tính năng
 - Graph:
--- Lấy access token
--- Xử lý request API từ WebSDK: https://docs-sdk.voip24h.vn/
-- Callkit (cơ chế SIP): 
--- Đăng kí tài khoản sip
--- Xử lý gọi đi
--- Nhận cuộc gọi đến
--- Chuyển cuộc gọi
--- Tắt/Mở mic
--- ...
+
+	- Lấy access token
+	
+	- Xử lý request API từ WebSDK: https://docs-sdk.voip24h.vn/
+	
+	- Callkit (cơ chế SIP): 
+	
+		- Đăng kí tài khoản sip
+		
+		- Xử lý gọi đi
+		
+		- Nhận cuộc gọi đến
+		
+		- Chuyển cuộc gọi
+		
+		- Tắt/Mở mic
+		
+		- ...
 
 ### Yêu cầu
 - MinSDK: 23 (Android 6.0)
 - Trong app `AndroidManifest`:
-  -- Cấp quyền ứng dụng
+
+  - Cấp quyền ứng dụng
+  
     ```
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     ```
-  -- Trong application thêm thuộc tính:
+    
+  - Trong application thêm thuộc tính:
+ 
     ```
     <application
         ...
@@ -35,14 +48,15 @@ Android SDK - VOIP24H
 Bước 1: Trong root `build.gradle` thêm maven trong repositories
 ```
 allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
+    repositories {
+        ...
+	maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
-Lưu ý: Đối với Android Studio Arctic Fox | 2020.3.1 Patch 1 hoặc phiên bản cao hơn, root build.gradle không tạo ra `allprojects`. Vào `settings.gradle` thêm maven trong repositories
+Lưu ý: Đối với Android Studio Arctic Fox | 2020.3.1 Patch 1 hoặc phiên bản cao hơn, root build.gradle không tạo ra `allprojects`. Trong `settings.gradle` thêm maven trong repositories
+
 ```
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -52,7 +66,9 @@ dependencyResolutionManagement {
     }
 }
 ```
+
 Hoặc
+
 Trong `settings.gradle`
 ```
 dependencyResolutionManagement {
@@ -65,10 +81,10 @@ dependencyResolutionManagement {
 Trong root `build.gradle`
 ```
 allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
+    repositories {
+        ...
+	maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
@@ -84,35 +100,47 @@ Thay $sdk-version bằng phiên bản mới nhất: [![](https://jitpack.io/v/ha
 
 ### Ví dụ
 - Graph:
-    -- Lấy access token trước khi request các api khác
-    vd: Lấy access token
-    ```
-    GraphManager.getAccessToken(
+	- Lấy access token trước khi request các api khác
+	
+    	vd: Lấy access token
+	```
+	GraphManager.getAccessToken(
         "your api_key",
         "your api_secret",
         object : AuthorizationListener {
-            override fun success(oauth: OAuth) {
-                Log.d(TAG, oauth.isToken)
+	    override fun success(oauth: OAuth) {
+	            Log.d(TAG, oauth.isToken)
             }
-
             override fun failed(exception: Exception) {
                 Log.d(TAG, exception.message.toString())
             }
         }
-    )
-    ```
-    -- Request api: tham khảo https://docs-sdk.voip24h.vn/
+     )
+	```
+   
+   - Request api: tham khảo https://docs-sdk.voip24h.vn/
+    	
     + Sử dụng function: sendRequest()
+    
     + Tham số:
         + method: Method.POST, Method.GET, Method.PUT,...
+        
         + endpoint: "call/find", "call/findone", "phonebook/find",...
+        
         + token: access token
+        
         + params: tham số để request
+        
         + listener: sự kiện trả về
+        
     + Kết quả trả về: dạng  jsonObject
+    
         + Dạng list: sử dụng jsonObject.toList<T>()
+
         + Dạng object: sử dụng jsonObject.toObject<T>()
+	
         + Trạng thái request: jsonObject.statusCode(), jsonObject.message(),....
+	
         + Lưu ý: T là kiểu dữ liệu tự định nghĩa 
     
     vd: Định nghĩa kiểu dữ liệu
@@ -199,8 +227,11 @@ Thay $sdk-version bằng phiên bản mới nhất: [![](https://jitpack.io/v/ha
     )
     ```
 - Callkit:
-    -- Cấp quyền runtime `RECORD_AUDIO` trước khi sử dụng 
-    -- Đăng kí sip account
+	
+    - Cấp quyền runtime `RECORD_AUDIO` trước khi sử dụng 
+	
+    - Đăng kí sip account
+	
     ```
     val sipConfiguration = SipConfiguration.Builder("ext", "password", "domain")
             .transport(TransportType.Tcp)
@@ -213,11 +244,14 @@ Thay $sdk-version bằng phiên bản mới nhất: [![](https://jitpack.io/v/ha
         }
     })
     ```
-    -- Huỷ đăng ký
+	
+    - Huỷ đăng ký
+	
     ```
     CallManager.getInstance(this).logout()
-    ```
-    -- Chức năng: gọi đi, ngắt máy, chấp nhận cuộc gọi , từ chối cuộc gọi,... 
+    ```	
+	
+    - Chức năng: gọi đi, ngắt máy, chấp nhận cuộc gọi , từ chối cuộc gọi,... 
     
     vd: Gọi đi
     ```
