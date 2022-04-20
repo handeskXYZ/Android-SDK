@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         GraphManager.getAccessToken(
-            "9ec35fd47a4a9bfb19ff0f33a136413ed50b2834",
-            "9d7a1902cbbb589f7f14589ac9deb1fde839e2d0",
+            "your_api_key",
+            "your_api_sercet",
             object : AuthorizationListener {
                 override fun success(oauth: OAuth) {
                     Log.d(TAG, oauth.isToken)
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun call() {
-        callManager.call("0973566691")
+        callManager.call("phoneNumber")
     }
 
     private fun hangup() {
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             Method.POST,
             "call/findone",
             token,
-            listOf("callid" to "1650005709.518"),
+            listOf("callid" to "your_call_id"),
             object : RequestListener {
                 override fun success(jsonObject: JSONObject) {
                     val obj = jsonObject.toObject<CallHistory>()
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        val sipConfiguration = SipConfiguration.Builder("102", "voip24h.vn", "14.225.251.72")
+        val sipConfiguration = SipConfiguration.Builder("ext", "password", "domain")
             .isIpv6Enable(true)
             .isKeepAlive(true)
             .transport(TransportType.Tcp)
