@@ -9,19 +9,33 @@ Android SDK - VOIP24H
 	
 	- Request API từ WebSDK: https://docs-sdk.voip24h.vn/
 	
-- Callkit (cơ chế SIP): 
+- Callkit (cơ chế SIP):
 	
   - Đăng kí tài khoản sip
+  
+  - Huỷ đăng kí sip
+  
+  - Refresh đăng kí sip
 		
   - Xử lý gọi đi
 		
   - Nhận cuộc gọi đến
+  
+  - Ngắt cuộc gọi
+  
+  - Từ chối cuộc gọi
+  
+  - Chấp nhận cuộc gọi
 		
   - Chuyển cuộc gọi
+  
+  - Pause/Resume cuộc gọi
 		
   - Tắt/Mở mic
 	 
-  - ...
+  - Tắt/Mở loa
+  
+  - Bắt sự kiện trạng thái cuộc gọi
 
 ### Yêu cầu
 - MinSDK: 23 (Android 6.0)
@@ -214,11 +228,17 @@ implementation project(path: ':Android-SDK:voip24h-sdk')
     })
     ```
 	
-    - Huỷ đăng ký
+    - Huỷ đăng kí
   
     ```
     CallManager.getInstance(this).logout()
     ```	
+    
+    - Refresh đăng kí
+    
+    ```
+    CallManager.getInstance(this).refreshRegister()
+    ```
 	
     - Chức năng: gọi đi, ngắt máy, chấp nhận cuộc gọi , từ chối cuộc gọi, lắng nghe sự kiện,... 
     
@@ -229,6 +249,34 @@ implementation project(path: ':Android-SDK:voip24h-sdk')
     vd: Ngắt máy
     ```
     CallManager.getInstance(this).hangup("callId")
+    ```
+    vd: Chấp nhận cuộc gọi
+    ```
+    CallManager.getInstance(this).answer()
+    ```
+    vd: Từ chối cuộc gọi
+    ```
+    CallManager.getInstance(this).decline("callId")
+    ```
+    vd: Chuyển cuộc gọi
+    ```
+    CallManager.getInstance(this).transfer("other ext")
+    ```
+    vd: Pause cuộc gọi
+    ```
+    CallManager.getInstance(this).pause("callId")
+    ```
+    vd: Resume cuộc gọi
+    ```
+    CallManager.getInstance(this).resume("callId")
+    ```
+    vd: Tắt/Mở mic
+    ```
+    CallManager.getInstance(this).enableMic(false/true)
+    ```
+    vd: Tắt/Mở loa
+    ```
+    CallManager.getInstance(this).setOutputAudioType(AudioType.Earpiece/AudioType.Speaker)
     ```
     vd: Lắng nghe sự kiện
     ```
@@ -285,7 +333,7 @@ implementation project(path: ':Android-SDK:voip24h-sdk')
 
 ### License
 ```
-Copyright 2022 VOIP24h
+Copyright 2022 VOIP24H
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
